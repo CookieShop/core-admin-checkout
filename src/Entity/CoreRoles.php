@@ -1,6 +1,6 @@
 <?php
 
-namespace Adteam\Core\Checkout\Entity;
+namespace Adteam\Core\Admin\Checkout\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -31,7 +31,7 @@ class CoreRoles
     /**
      * @var \Application\Entity\CoreRoles
      *
-     * @ORM\ManyToOne(targetEntity="Adteam\Core\Checkout\Entity\CoreRoles")
+     * @ORM\ManyToOne(targetEntity="Adteam\Core\Admin\Checkout\Entity\CoreRoles")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="parent_id", referencedColumnName="id", nullable=true)
      * })
@@ -39,7 +39,7 @@ class CoreRoles
     private $parent;
     
     /**
-     * @ORM\OneToMany(targetEntity="Adteam\Core\Checkout\Entity\CorePermissions", mappedBy="role")
+     * @ORM\OneToMany(targetEntity="Adteam\Core\Admin\Checkout\Entity\CorePermissions", mappedBy="role")
      */
     private $permissions;
 
@@ -85,7 +85,7 @@ class CoreRoles
      *
      * @return CoreRoles
      */
-    public function setParent(\Adteam\Core\Checkout\Entity\CoreRoles $parent = null)
+    public function setParent(\Adteam\Core\Admin\Checkout\Entity\CoreRoles $parent = null)
     {
         $this->parent = $parent;
 
@@ -97,8 +97,7 @@ class CoreRoles
      *
      * @return \Adteam\Core\Checkout\Entity\CoreRoles
      */
-    public function getParent()
-    {
+    public function getParent()    {
         return $this->parent;
     }
 }

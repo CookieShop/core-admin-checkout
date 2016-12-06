@@ -1,6 +1,6 @@
 <?php
 
-namespace Adteam\Core\Checkout\Entity;
+namespace Adteam\Core\Admin\Checkout\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * CoreOrders
  *
  * @ORM\Table(name="core_orders", indexes={@ORM\Index(name="core_orderss_ibfk_1", columns={"user_id"}), @ORM\Index(name="core_orders_ibfk_2", columns={"created_by_id"})})
- * @ORM\Entity(repositoryClass="Adteam\Core\Checkout\Repository\CoreOrdersRepository")
+ * @ORM\Entity(repositoryClass="Adteam\Core\Admin\Checkout\Repository\CoreOrdersRepository")
  */
 class CoreOrders
 {
@@ -52,7 +52,7 @@ class CoreOrders
     /**
      * @var \Adteam\Core\Checkout\Entity\OauthUsers
      *
-     * @ORM\ManyToOne(targetEntity="Adteam\Core\Checkout\Entity\OauthUsers")
+     * @ORM\ManyToOne(targetEntity="Adteam\Core\Admin\Checkout\Entity\OauthUsers")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="created_by_id", referencedColumnName="id", nullable=true)
      * })
@@ -62,7 +62,7 @@ class CoreOrders
     /**
      * @var \Adteam\Core\Checkout\Entity\OauthUsers
      *
-     * @ORM\ManyToOne(targetEntity="Adteam\Core\Checkout\Entity\OauthUsers")
+     * @ORM\ManyToOne(targetEntity="Adteam\Core\Admin\Checkout\Entity\OauthUsers")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
      * })
@@ -183,7 +183,7 @@ class CoreOrders
      *
      * @return CoreOrders
      */
-    public function setCreatedBy(\Adteam\Core\Checkout\Entity\OauthUsers $createdBy = null)
+    public function setCreatedBy(\Adteam\Core\Admin\Checkout\Entity\OauthUsers $createdBy = null)
     {
         $this->createdBy = $createdBy;
 
@@ -207,7 +207,7 @@ class CoreOrders
      *
      * @return CoreOrders
      */
-    public function setUser(\Adteam\Core\Checkout\Entity\OauthUsers $user = null)
+    public function setUser(\Adteam\Core\Admin\Checkout\Entity\OauthUsers $user = null)
     {
         $this->user = $user;
 

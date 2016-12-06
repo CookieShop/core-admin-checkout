@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-namespace Adteam\Core\Checkout\Validator;
+namespace Adteam\Core\Admin\Checkout\Validator;
 
 /**
  * Description of Balance

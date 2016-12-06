@@ -1,6 +1,6 @@
 <?php
 
-namespace Adteam\Core\Checkout\Entity;
+namespace Adteam\Core\Admin\Checkout\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -52,7 +52,7 @@ class CoreResources
     /**
      * @var \Application\Entity\CoreResources
      *
-     * @ORM\ManyToOne(targetEntity="Adteam\Core\Checkout\Entity\CoreResources")
+     * @ORM\ManyToOne(targetEntity="Adteam\Core\Admin\Checkout\Entity\CoreResources")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="parent_id", referencedColumnName="id", nullable=true)
      * })
@@ -173,7 +173,7 @@ class CoreResources
      *
      * @return CoreResources
      */
-    public function setParent(\Adteam\Core\Checkout\Entity\CoreResources $parent = null)
+    public function setParent(\Adteam\Core\Admin\Checkout\Entity\CoreResources $parent = null)
     {
         $this->parent = $parent;
 

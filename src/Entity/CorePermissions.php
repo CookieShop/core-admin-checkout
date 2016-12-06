@@ -1,6 +1,6 @@
 <?php
 
-namespace Adteam\Core\Checkout\Entity;
+namespace Adteam\Core\Admin\Checkout\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -41,7 +41,7 @@ class CorePermissions
     /**
      * @var \Application\Entity\CoreResources
      *
-     * @ORM\ManyToOne(targetEntity="Adteam\Core\Checkout\Entity\CoreResources")
+     * @ORM\ManyToOne(targetEntity="Adteam\Core\Admin\Checkout\Entity\CoreResources")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="resource_id", referencedColumnName="id", nullable=true)
      * })
@@ -51,7 +51,7 @@ class CorePermissions
     /**
      * @var \Application\Entity\CoreRoles
      *
-     * @ORM\ManyToOne(targetEntity="Adteam\Core\Checkout\Entity", inversedBy="permissions")
+     * @ORM\ManyToOne(targetEntity="Adteam\Core\Admin\Checkout\Entity", inversedBy="permissions")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="role_id", referencedColumnName="id", nullable=true)
      * })
@@ -100,7 +100,7 @@ class CorePermissions
      *
      * @return CorePermissions
      */
-    public function setResource(\Adteam\Core\Checkout\Entity\CoreResources $resource = null)
+    public function setResource(\Adteam\Core\Admin\Checkout\Entity\CoreResources $resource = null)
     {
         $this->resource = $resource;
 
@@ -124,7 +124,7 @@ class CorePermissions
      *
      * @return CorePermissions
      */
-    public function setRole(\Adteam\Core\Checkout\Entity\CoreRoles $role = null)
+    public function setRole(\Adteam\Core\Admin\Checkout\Entity\CoreRoles $role = null)
     {
         $this->role = $role;
 

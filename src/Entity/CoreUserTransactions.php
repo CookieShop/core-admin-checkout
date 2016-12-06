@@ -1,6 +1,6 @@
 <?php
 
-namespace Adteam\Core\Checkout\Entity;
+namespace Adteam\Core\Admin\Checkout\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * CoreUserTransactions
  *
  * @ORM\Table(name="core_user_transactions", indexes={@ORM\Index(name="user_id", columns={"user_id"})})
- * @ORM\Entity(repositoryClass="Adteam\Core\Checkout\Repository\CoreUserTransactionsRepository")
+ * @ORM\Entity(repositoryClass="Adteam\Core\Admin\Checkout\Repository\CoreUserTransactionsRepository")
  */
 class CoreUserTransactions
 {    
@@ -296,7 +296,7 @@ class CoreUserTransactions
      *
      * @return CoreUserTransactions
      */
-    public function setUser(\Adteam\Core\Checkout\Entity\OauthUsers $user = null)
+    public function setUser(\Adteam\Core\Admin\Checkout\Entity\OauthUsers $user = null)
     {
         $this->user = $user;
 

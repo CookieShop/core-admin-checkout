@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-namespace Adteam\Core\Checkout\Repository;
+namespace Adteam\Core\Admin\Checkout\Repository;
 
 /**
  * Description of CoreUserTransactionsRepository

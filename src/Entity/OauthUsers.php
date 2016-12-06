@@ -1,6 +1,6 @@
 <?php
 
-namespace Adteam\Core\Checkout\Entity;
+namespace Adteam\Core\Admin\Checkout\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -143,7 +143,7 @@ class OauthUsers
     /**
      * @var \Application\Entity\CoreRoles
      *
-     * @ORM\ManyToOne(targetEntity="Adteam\Core\Checkout\Entity\CoreRoles")
+     * @ORM\ManyToOne(targetEntity="Adteam\Core\Admin\Checkout\Entity\CoreRoles")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="role_id", referencedColumnName="id", nullable=true)
      * })
@@ -153,7 +153,7 @@ class OauthUsers
     /**
      * @var \Adteam\Core\Checkout\Entity\OauthUsers
      *
-     * @ORM\ManyToOne(targetEntity="Adteam\Core\Checkout\Entity\OauthUsers")
+     * @ORM\ManyToOne(targetEntity="Adteam\Core\Admin\Checkout\Entity\OauthUsers")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="created_by_id", referencedColumnName="id", nullable=true)
      * })
@@ -586,7 +586,7 @@ class OauthUsers
      *
      * @return OauthUsers
      */
-    public function setRole(\Adteam\Core\Checkout\Entity\CoreRoles $role = null)
+    public function setRole(\Adteam\Core\Admin\Checkout\Entity\CoreRoles $role = null)
     {
         $this->role = $role;
 
@@ -610,7 +610,7 @@ class OauthUsers
      *
      * @return OauthUsers
      */
-    public function setCreatedBy(\Adteam\Core\Checkout\Entity\OauthUsers $createdBy = null)
+    public function setCreatedBy(\Adteam\Core\Admin\Checkout\Entity\OauthUsers $createdBy = null)
     {
         $this->createdBy = $createdBy;
 

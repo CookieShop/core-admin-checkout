@@ -1,6 +1,6 @@
 <?php
 
-namespace Adteam\Core\Checkout\Entity;
+namespace Adteam\Core\Admin\Checkout\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -80,7 +80,7 @@ class CoreOrderProducts
     /**
      * @var \Adteam\Core\Checkout\Entity\CoreOrders
      *
-     * @ORM\ManyToOne(targetEntity="Adteam\Core\Checkout\Entity\CoreOrders")
+     * @ORM\ManyToOne(targetEntity="Adteam\Core\Admin\Checkout\Entity\CoreOrders")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="order_id", referencedColumnName="id", nullable=true)
      * })
@@ -90,7 +90,7 @@ class CoreOrderProducts
     /**
      * @var \Adteam\Core\Checkout\Entity\CoreProducts
      *
-     * @ORM\ManyToOne(targetEntity="Adteam\Core\Checkout\Entity\CoreProducts")
+     * @ORM\ManyToOne(targetEntity="Adteam\Core\Admin\Checkout\Entity\CoreProducts")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="product_id", referencedColumnName="id", nullable=true)
      * })
@@ -307,7 +307,7 @@ class CoreOrderProducts
      *
      * @return CoreOrderProducts
      */
-    public function setOrder(\Adteam\Core\Checkout\Entity\CoreOrders $order = null)
+    public function setOrder(\Adteam\Core\Admin\Checkout\Entity\CoreOrders $order = null)
     {
         $this->order = $order;
 
@@ -331,7 +331,7 @@ class CoreOrderProducts
      *
      * @return CoreOrderProducts
      */
-    public function setProduct(\Adteam\Core\Checkout\Entity\CoreProducts $product = null)
+    public function setProduct(\Adteam\Core\Admin\Checkout\Entity\CoreProducts $product = null)
     {
         $this->product = $product;
 
