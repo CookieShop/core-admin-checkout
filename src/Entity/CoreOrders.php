@@ -38,7 +38,7 @@ class CoreOrders
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="deleted_at", type="datetime", precision=0, scale=0, nullable=false, unique=false)
+     * @ORM\Column(name="deleted_at", type="datetime", precision=0, scale=0, nullable=true, unique=false)
      */
     private $deletedAt;
 
@@ -50,7 +50,7 @@ class CoreOrders
     private $createdAt;
 
     /**
-     * @var \Adteam\Core\Checkout\Entity\OauthUsers
+     * @var \Adteam\Core\Admin\Checkout\Entity\OauthUsers
      *
      * @ORM\ManyToOne(targetEntity="Adteam\Core\Admin\Checkout\Entity\OauthUsers")
      * @ORM\JoinColumns({
@@ -60,7 +60,7 @@ class CoreOrders
     private $createdBy;
 
     /**
-     * @var \Adteam\Core\Checkout\Entity\OauthUsers
+     * @var \Adteam\Core\Admin\Checkout\Entity\OauthUsers
      *
      * @ORM\ManyToOne(targetEntity="Adteam\Core\Admin\Checkout\Entity\OauthUsers")
      * @ORM\JoinColumns({
@@ -179,7 +179,7 @@ class CoreOrders
     /**
      * Set createdBy
      *
-     * @param \Adteam\Core\Checkout\Entity\OauthUsers $createdBy
+     * @param \Adteam\Core\Admin\Checkout\Entity\OauthUsers $createdBy
      *
      * @return CoreOrders
      */
@@ -193,7 +193,7 @@ class CoreOrders
     /**
      * Get createdBy
      *
-     * @return \Adteam\Core\Checkout\Entity\OauthUsers
+     * @return \Adteam\Core\Admin\Checkout\Entity\OauthUsers
      */
     public function getCreatedBy()
     {
@@ -203,7 +203,7 @@ class CoreOrders
     /**
      * Set user
      *
-     * @param \Adteam\Core\Checkout\Entity\OauthUsers $user
+     * @param \Adteam\Core\Admin\Checkout\Entity\OauthUsers $user
      *
      * @return CoreOrders
      */
@@ -217,7 +217,7 @@ class CoreOrders
     /**
      * Get user
      *
-     * @return \Adteam\Core\Checkout\Entity\OauthUsers
+     * @return \Adteam\Core\Admin\Checkout\Entity\OauthUsers
      */
     public function getUser()
     {

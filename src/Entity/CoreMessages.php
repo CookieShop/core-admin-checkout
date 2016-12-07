@@ -5,12 +5,12 @@ namespace Adteam\Core\Admin\Checkout\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * CoreConfigs
+ * CoreMessages
  *
- * @ORM\Table(name="core_configs")
+ * @ORM\Table(name="core_messages")
  * @ORM\Entity
  */
-class CoreConfigs
+class CoreMessages
 {
     /**
      * @var integer
@@ -24,16 +24,23 @@ class CoreConfigs
     /**
      * @var string
      *
-     * @ORM\Column(name="key", type="string", length=255, precision=0, scale=0, nullable=true, unique=false)
+     * @ORM\Column(name="key", type="string", length=255, precision=0, scale=0, nullable=false, unique=false)
      */
     private $key;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="value", type="text", length=65535, precision=0, scale=0, nullable=true, unique=false)
+     * @ORM\Column(name="value", type="text", length=65535, precision=0, scale=0, nullable=false, unique=false)
      */
     private $value;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="string", length=255, precision=0, scale=0, nullable=false, unique=false)
+     */
+    private $description;
 
     /**
      * @var boolean
@@ -58,7 +65,7 @@ class CoreConfigs
      *
      * @param string $key
      *
-     * @return CoreConfigs
+     * @return CoreMessages
      */
     public function setKey($key)
     {
@@ -82,7 +89,7 @@ class CoreConfigs
      *
      * @param string $value
      *
-     * @return CoreConfigs
+     * @return CoreMessages
      */
     public function setValue($value)
     {
@@ -102,11 +109,35 @@ class CoreConfigs
     }
 
     /**
+     * Set description
+     *
+     * @param string $description
+     *
+     * @return CoreMessages
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
      * Set visibility
      *
      * @param boolean $visibility
      *
-     * @return CoreConfigs
+     * @return CoreMessages
      */
     public function setVisibility($visibility)
     {

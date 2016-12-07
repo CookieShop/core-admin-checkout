@@ -29,7 +29,7 @@ class CoreRoles
     private $role;
 
     /**
-     * @var \Application\Entity\CoreRoles
+     * @var \Adteam\Core\Admin\Checkout\Entity\CoreRoles
      *
      * @ORM\ManyToOne(targetEntity="Adteam\Core\Admin\Checkout\Entity\CoreRoles")
      * @ORM\JoinColumns({
@@ -37,11 +37,6 @@ class CoreRoles
      * })
      */
     private $parent;
-    
-    /**
-     * @ORM\OneToMany(targetEntity="Adteam\Core\Admin\Checkout\Entity\CorePermissions", mappedBy="role")
-     */
-    private $permissions;
 
 
     /**
@@ -81,7 +76,7 @@ class CoreRoles
     /**
      * Set parent
      *
-     * @param \Application\Entity\CoreRoles $parent
+     * @param \Adteam\Core\Admin\Checkout\Entity\CoreRoles $parent
      *
      * @return CoreRoles
      */
@@ -95,9 +90,10 @@ class CoreRoles
     /**
      * Get parent
      *
-     * @return \Adteam\Core\Checkout\Entity\CoreRoles
+     * @return \Adteam\Core\Admin\Checkout\Entity\CoreRoles
      */
-    public function getParent()    {
+    public function getParent()
+    {
         return $this->parent;
     }
 }

@@ -17,6 +17,8 @@ use Adteam\Core\Admin\Checkout\Entity\CoreOrderProducts;
 use Adteam\Core\Admin\Checkout\Entity\CoreOrderAddressses;
 use Adteam\Core\Admin\Checkout\Entity\CoreOrderCedis;
 use Adteam\Core\Admin\Checkout\Entity\CoreCedis;
+use Adteam\Core\Admin\Checkout\Entity\CoreUserAddresses;
+use Adteam\Core\Admin\Checkout\Entity\CoreUserCedis;
 use DateTime;
 use DateTimeZone;
 
@@ -37,10 +39,10 @@ class CoreOrdersRepository extends EntityRepository
     {
         $entities = [];
         $result = $this->createQueryBuilder('O')
-               ->select("O.id,O.createdAt,U.id as userId ,C.id as createdById, O.total")
+               ->select("O.id,O.createdAt,U.id as userId ,C.id as createdById, O.total,O.deletedAt")
                ->innerJoin('O.user', 'U')
                ->innerJoin('O.createdBy', 'C')
-               ->where("O.deletedAt IS NULL")            
+//               ->where("O.deletedAt IS NULL")            
                ->getQuery()->iterate();
        foreach ($result as $items){           
            $item = reset($items);
@@ -49,7 +51,8 @@ class CoreOrdersRepository extends EntityRepository
                'createdAt'=>  $this->formatObjectDateTime($item['createdAt']),
                'userId'=>  $this->getUser($item['userId']),
                'createdById'=>$this->getUser($item['createdById']),
-               'total'=>$item['total']
+               'total'=>$item['total'],
+               'delete'=>is_null($item['deletedAt'])?0:1
            ]; 
        }
       return $entities;
@@ -64,24 +67,25 @@ class CoreOrdersRepository extends EntityRepository
     {
         $entities = [];
         $result = $this->createQueryBuilder('O')
-               ->select("O.id,O.createdAt,U.id as userId ,C.id as createdById, O.total")
+               ->select("O.id,O.createdAt,U.id as userId ,C.id as createdById, O.total,O.deletedAt")
                ->innerJoin('O.user', 'U') 
                ->innerJoin('O.createdBy', 'C')
-               ->where("O.deletedAt IS NULL") 
-               ->andWhere('O.id = :id') 
+//               ->where("O.deletedAt IS NULL") 
+               ->Where('O.id = :id') 
                ->setParameter('id', $id)
                ->getQuery()->iterate();  
        foreach ($result as $items){  
            $item = reset($items);
-           $entities[] = [
+           $entities = [
                'id'=>$item['id'],
                'createdAt'=>  $this->formatObjectDateTime($item['createdAt']),
-               'userId'=>  $this->getUser($item['userId'],false),
-               'createdById'=>$this->getUser($item['createdById'],false),
+               'user'=>  $this->getUser($item['userId'],false),
+               'createdBy'=>$this->getUser($item['createdById'],false),
                'address'=>  $this->getAdress($id),
                'cedis'=>  $this->getCedis($id),
                'items'=>  $this->getProducts($id),
-               'total'=>$item['total']
+               'total'=>$item['total'],
+               'delete'=>is_null($item['deletedAt'])?0:1
            ]; 
        }
       return $entities;        
@@ -131,6 +135,8 @@ class CoreOrdersRepository extends EntityRepository
                 $id = $coreorders->getId();
                 $currentRepo->insertCoreProducts($id, $data);
                 $currentRepo->insertTransaction($data, $id);
+                $currentRepo->insertCoreAdresess($id, $data['identity']['id'],$data);
+                $currentRepo->insertCedis($data,$id);                
                 return $id;
             }
         );        
@@ -231,6 +237,39 @@ class CoreOrdersRepository extends EntityRepository
         $this->_em->persist($CoreUserTransactions);
         $this->_em->flush();        
     } 
+    
+    
+    /**
+     * 
+     * @param type $idOrder
+     * @param type $params
+     * @throws \InvalidArgumentException
+     */
+    public function insertCoreAdresess($idOrder,$userId,$data)
+    {
+        $result = $this->getUserAddress($userId);
+        if($result!==false){
+            return $this->_em->getRepository(CoreUserAddresses::class)
+                    ->insertCoreAdresess($idOrder,$result,$data);              
+        }
+    }
+
+    public function getUserAddress($userId)
+    {
+        return $this->_em->getRepository(CoreUserAddresses::class)
+                ->getAddreses($userId);        
+    }
+
+    public function insertCedis($params,$orderId)
+    {
+        $result =  $this->_em->getRepository(CoreUserCedis::class)
+                ->getCedis($params['identity']['id']);
+        if($result!==false){
+            $result =  $this->_em->getRepository(CoreOrderCedis::class)
+                    ->insertCedis($orderId,$result['id']);
+             
+        }
+    }
     
     /**
      * 

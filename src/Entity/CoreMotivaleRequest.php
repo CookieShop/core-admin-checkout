@@ -5,12 +5,12 @@ namespace Adteam\Core\Admin\Checkout\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * CoreSurveyQuestions
+ * CoreMotivaleRequest
  *
- * @ORM\Table(name="core_survey_questions", indexes={@ORM\Index(name="core_survey_questions_ibfk_2", columns={"user_id"})})
+ * @ORM\Table(name="core_motivale_request", indexes={@ORM\Index(name="core_motiva_request_ibfk_1", columns={"user_id"})})
  * @ORM\Entity
  */
-class CoreSurveyQuestions
+class CoreMotivaleRequest
 {
     /**
      * @var integer
@@ -22,25 +22,25 @@ class CoreSurveyQuestions
     private $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="question", type="string", length=255, precision=0, scale=0, nullable=false, unique=false)
-     */
-    private $question;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="answer", type="text", length=65535, precision=0, scale=0, nullable=false, unique=false)
-     */
-    private $answer;
-
-    /**
      * @var \DateTime
      *
-     * @ORM\Column(name="created_at", type="datetime", precision=0, scale=0, nullable=false, unique=false)
+     * @ORM\Column(name="request_date", type="datetime", precision=0, scale=0, nullable=false, unique=false)
      */
-    private $createdAt;
+    private $requestDate;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="file_name", type="string", length=255, precision=0, scale=0, nullable=false, unique=false)
+     */
+    private $fileName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="action", type="string", precision=0, scale=0, nullable=false, unique=false)
+     */
+    private $action;
 
     /**
      * @var \Adteam\Core\Admin\Checkout\Entity\OauthUsers
@@ -64,75 +64,75 @@ class CoreSurveyQuestions
     }
 
     /**
-     * Set question
+     * Set requestDate
      *
-     * @param string $question
+     * @param \DateTime $requestDate
      *
-     * @return CoreSurveyQuestions
+     * @return CoreMotivaleRequest
      */
-    public function setQuestion($question)
+    public function setRequestDate($requestDate)
     {
-        $this->question = $question;
+        $this->requestDate = $requestDate;
 
         return $this;
     }
 
     /**
-     * Get question
-     *
-     * @return string
-     */
-    public function getQuestion()
-    {
-        return $this->question;
-    }
-
-    /**
-     * Set answer
-     *
-     * @param string $answer
-     *
-     * @return CoreSurveyQuestions
-     */
-    public function setAnswer($answer)
-    {
-        $this->answer = $answer;
-
-        return $this;
-    }
-
-    /**
-     * Get answer
-     *
-     * @return string
-     */
-    public function getAnswer()
-    {
-        return $this->answer;
-    }
-
-    /**
-     * Set createdAt
-     *
-     * @param \DateTime $createdAt
-     *
-     * @return CoreSurveyQuestions
-     */
-    public function setCreatedAt($createdAt)
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    /**
-     * Get createdAt
+     * Get requestDate
      *
      * @return \DateTime
      */
-    public function getCreatedAt()
+    public function getRequestDate()
     {
-        return $this->createdAt;
+        return $this->requestDate;
+    }
+
+    /**
+     * Set fileName
+     *
+     * @param string $fileName
+     *
+     * @return CoreMotivaleRequest
+     */
+    public function setFileName($fileName)
+    {
+        $this->fileName = $fileName;
+
+        return $this;
+    }
+
+    /**
+     * Get fileName
+     *
+     * @return string
+     */
+    public function getFileName()
+    {
+        return $this->fileName;
+    }
+
+    /**
+     * Set action
+     *
+     * @param string $action
+     *
+     * @return CoreMotivaleRequest
+     */
+    public function setAction($action)
+    {
+        $this->action = $action;
+
+        return $this;
+    }
+
+    /**
+     * Get action
+     *
+     * @return string
+     */
+    public function getAction()
+    {
+        return $this->action;
     }
 
     /**
@@ -140,7 +140,7 @@ class CoreSurveyQuestions
      *
      * @param \Adteam\Core\Admin\Checkout\Entity\OauthUsers $user
      *
-     * @return CoreSurveyQuestions
+     * @return CoreMotivaleRequest
      */
     public function setUser(\Adteam\Core\Admin\Checkout\Entity\OauthUsers $user = null)
     {

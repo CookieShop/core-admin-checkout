@@ -38,16 +38,16 @@ class CoreProductCategories
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="string", length=255, precision=0, scale=0, nullable=true, unique=false)
+     * @ORM\Column(name="file_name", type="string", length=255, precision=0, scale=0, nullable=false, unique=false)
      */
-    private $description;
-    
+    private $fileName;
+
     /**
      * @var string
      *
-     * @ORM\Column(name="file_name", type="string", length=255, precision=0, scale=0, nullable=true, unique=false)
+     * @ORM\Column(name="description", type="string", length=255, precision=0, scale=0, nullable=true, unique=false)
      */
-    private $fileName;
+    private $description;
 
     /**
      * @var integer
@@ -66,13 +66,6 @@ class CoreProductCategories
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="deleted_at", type="datetime", precision=0, scale=0, nullable=true, unique=false)
-     */
-    private $deletedAt;
-
-    /**
-     * @var \DateTime
-     *
      * @ORM\Column(name="created_at", type="datetime", precision=0, scale=0, nullable=false, unique=false)
      */
     private $createdAt;
@@ -85,9 +78,16 @@ class CoreProductCategories
     private $modifiedAt;
 
     /**
-     * @var \Application\Entity\CoreProductCategories
+     * @var \DateTime
      *
-     * @ORM\ManyToOne(targetEntity="Adteam\Core\Checkout\Entity\CoreProductCategories")
+     * @ORM\Column(name="deleted_at", type="datetime", precision=0, scale=0, nullable=true, unique=false)
+     */
+    private $deletedAt;
+
+    /**
+     * @var \Adteam\Core\Admin\Checkout\Entity\CoreProductCategories
+     *
+     * @ORM\ManyToOne(targetEntity="Adteam\Core\Admin\Checkout\Entity\CoreProductCategories")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="parent_id", referencedColumnName="id", nullable=true)
      * })
@@ -95,37 +95,15 @@ class CoreProductCategories
     private $parent;
 
     /**
-     * @var \Application\Entity\OauthUsers
+     * @var \Adteam\Core\Admin\Checkout\Entity\OauthUsers
      *
-     * @ORM\ManyToOne(targetEntity="Adteam\Core\Checkout\Entity\OauthUsers")
+     * @ORM\ManyToOne(targetEntity="Adteam\Core\Admin\Checkout\Entity\OauthUsers")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
      * })
      */
     private $user;
 
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Adteam\Core\Checkout\Entity\CoreProducts", mappedBy="categories")
-     */
-    private $products;
-    
-   /**
-    * @ORM\ManyToMany(targetEntity="CoreRoles")
-    * @ORM\JoinTable(name="core_roles_x_products_categories",
-    *      joinColumns={@ORM\JoinColumn(name="category_id", referencedColumnName="id")},
-    *      inverseJoinColumns={@ORM\JoinColumn(name="role_id", referencedColumnName="id", unique=true)} )
-    **/
-    protected $roles;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->products = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
      * Get id
@@ -186,6 +164,30 @@ class CoreProductCategories
     }
 
     /**
+     * Set fileName
+     *
+     * @param string $fileName
+     *
+     * @return CoreProductCategories
+     */
+    public function setFileName($fileName)
+    {
+        $this->fileName = $fileName;
+
+        return $this;
+    }
+
+    /**
+     * Get fileName
+     *
+     * @return string
+     */
+    public function getFileName()
+    {
+        return $this->fileName;
+    }
+
+    /**
      * Set description
      *
      * @param string $description
@@ -207,30 +209,6 @@ class CoreProductCategories
     public function getDescription()
     {
         return $this->description;
-    }
-    
-        /**
-     * Set fileName
-     *
-     * @param string $fileName
-     *
-     * @return CoreProducts
-     */
-    public function setFileName($fileName)
-    {
-        $this->fileName = $fileName;
-
-        return $this;
-    }
-
-    /**
-     * Get fileName
-     *
-     * @return string
-     */
-    public function getFileName()
-    {
-        return $this->fileName;
     }
 
     /**
@@ -282,30 +260,6 @@ class CoreProductCategories
     }
 
     /**
-     * Set deletedAt
-     *
-     * @param \DateTime $deletedAt
-     *
-     * @return CoreProductCategories
-     */
-    public function setDeletedAt($deletedAt)
-    {
-        $this->deletedAt = $deletedAt;
-
-        return $this;
-    }
-
-    /**
-     * Get deletedAt
-     *
-     * @return \DateTime
-     */
-    public function getDeletedAt()
-    {
-        return $this->deletedAt;
-    }
-
-    /**
      * Set createdAt
      *
      * @param \DateTime $createdAt
@@ -354,13 +308,37 @@ class CoreProductCategories
     }
 
     /**
-     * Set parent
+     * Set deletedAt
      *
-     * @param \Adteam\Core\Checkout\Entity\CoreProductCategories $parent
+     * @param \DateTime $deletedAt
      *
      * @return CoreProductCategories
      */
-    public function setParent(\Adteam\Core\Checkout\Entity\CoreProductCategories $parent = null)
+    public function setDeletedAt($deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get deletedAt
+     *
+     * @return \DateTime
+     */
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
+    }
+
+    /**
+     * Set parent
+     *
+     * @param \Adteam\Core\Admin\Checkout\Entity\CoreProductCategories $parent
+     *
+     * @return CoreProductCategories
+     */
+    public function setParent(\Adteam\Core\Admin\Checkout\Entity\CoreProductCategories $parent = null)
     {
         $this->parent = $parent;
 
@@ -370,7 +348,7 @@ class CoreProductCategories
     /**
      * Get parent
      *
-     * @return \Adteam\Core\Checkout\Entity\CoreProductCategories
+     * @return \Adteam\Core\Admin\Checkout\Entity\CoreProductCategories
      */
     public function getParent()
     {
@@ -380,11 +358,11 @@ class CoreProductCategories
     /**
      * Set user
      *
-     * @param \Adteam\Core\Checkout\Entity\OauthUsers $user
+     * @param \Adteam\Core\Admin\Checkout\Entity\OauthUsers $user
      *
      * @return CoreProductCategories
      */
-    public function setUser(\Adteam\Core\Checkout\Entity\OauthUsers $user = null)
+    public function setUser(\Adteam\Core\Admin\Checkout\Entity\OauthUsers $user = null)
     {
         $this->user = $user;
 
@@ -394,45 +372,11 @@ class CoreProductCategories
     /**
      * Get user
      *
-     * @return \Adteam\Core\Checkout\Entity\OauthUsers
+     * @return \Adteam\Core\Admin\Checkout\Entity\OauthUsers
      */
     public function getUser()
     {
         return $this->user;
-    }
-
-    /**
-     * Add product
-     *
-     * @param \Adteam\Core\Checkout\Entity\CoreProducts $product
-     *
-     * @return CoreProductCategories
-     */
-    public function addProduct(\Adteam\Core\Checkout\Entity\CoreProducts $product)
-    {
-        $this->products[] = $product;
-
-        return $this;
-    }
-
-    /**
-     * Remove product
-     *
-     * @param \Application\Entity\CoreProducts $product
-     */
-    public function removeProduct(\Adteam\Core\Checkout\Entity\CoreProducts $product)
-    {
-        $this->products->removeElement($product);
-    }
-
-    /**
-     * Get products
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getProducts()
-    {
-        return $this->products;
     }
 }
 

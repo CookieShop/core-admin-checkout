@@ -78,7 +78,7 @@ class CoreOrderProducts
     private $quantity;
 
     /**
-     * @var \Adteam\Core\Checkout\Entity\CoreOrders
+     * @var \Adteam\Core\Admin\Checkout\Entity\CoreOrders
      *
      * @ORM\ManyToOne(targetEntity="Adteam\Core\Admin\Checkout\Entity\CoreOrders")
      * @ORM\JoinColumns({
@@ -88,7 +88,7 @@ class CoreOrderProducts
     private $order;
 
     /**
-     * @var \Adteam\Core\Checkout\Entity\CoreProducts
+     * @var \Adteam\Core\Admin\Checkout\Entity\CoreProducts
      *
      * @ORM\ManyToOne(targetEntity="Adteam\Core\Admin\Checkout\Entity\CoreProducts")
      * @ORM\JoinColumns({
@@ -303,7 +303,7 @@ class CoreOrderProducts
     /**
      * Set order
      *
-     * @param \Adteam\Core\Checkout\Entity\CoreOrders $order
+     * @param \Adteam\Core\Admin\Checkout\Entity\CoreOrders $order
      *
      * @return CoreOrderProducts
      */
@@ -317,7 +317,7 @@ class CoreOrderProducts
     /**
      * Get order
      *
-     * @return \Adteam\Core\Checkout\Entity\CoreOrders
+     * @return \Adteam\Core\Admin\Checkout\Entity\CoreOrders
      */
     public function getOrder()
     {
@@ -327,7 +327,7 @@ class CoreOrderProducts
     /**
      * Set product
      *
-     * @param \Adteam\Core\Checkout\Entity\CoreProducts $product
+     * @param \Adteam\Core\Admin\Checkout\Entity\CoreProducts $product
      *
      * @return CoreOrderProducts
      */
@@ -341,7 +341,7 @@ class CoreOrderProducts
     /**
      * Get product
      *
-     * @return \Adteam\Core\Checkout\Entity\CoreProducts
+     * @return \Adteam\Core\Admin\Checkout\Entity\CoreProducts
      */
     public function getProduct()
     {

@@ -87,16 +87,9 @@ class CoreProducts
     /**
      * @var boolean
      *
-     * @ORM\Column(name="editable", type="boolean", precision=0, scale=0, nullable=false, unique=false)
+     * @ORM\Column(name="editable", type="boolean", precision=0, scale=0, nullable=true, unique=false)
      */
     private $editable;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="deleted_at", type="datetime", precision=0, scale=0, nullable=true, unique=false)
-     */
-    private $deletedAt;
 
     /**
      * @var \DateTime
@@ -111,14 +104,14 @@ class CoreProducts
      * @ORM\Column(name="modified_at", type="datetime", precision=0, scale=0, nullable=true, unique=false)
      */
     private $modifiedAt;
-    
+
     /**
-    * @ORM\ManyToMany(targetEntity="CoreProductCategories")
-    * @ORM\JoinTable(name="core_products_x_categories",
-    *      joinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id")},
-    *      inverseJoinColumns={@ORM\JoinColumn(name="category_id", referencedColumnName="id", unique=true)} )
-    **/
-    protected $categories;
+     * @var \DateTime
+     *
+     * @ORM\Column(name="deleted_at", type="datetime", precision=0, scale=0, nullable=true, unique=false)
+     */
+    private $deletedAt;
+
 
     /**
      * Get id
@@ -371,30 +364,6 @@ class CoreProducts
     }
 
     /**
-     * Set deletedAt
-     *
-     * @param \DateTime $deletedAt
-     *
-     * @return CoreProducts
-     */
-    public function setDeletedAt($deletedAt)
-    {
-        $this->deletedAt = $deletedAt;
-
-        return $this;
-    }
-
-    /**
-     * Get deletedAt
-     *
-     * @return \DateTime
-     */
-    public function getDeletedAt()
-    {
-        return $this->deletedAt;
-    }
-
-    /**
      * Set createdAt
      *
      * @param \DateTime $createdAt
@@ -441,4 +410,29 @@ class CoreProducts
     {
         return $this->modifiedAt;
     }
+
+    /**
+     * Set deletedAt
+     *
+     * @param \DateTime $deletedAt
+     *
+     * @return CoreProducts
+     */
+    public function setDeletedAt($deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get deletedAt
+     *
+     * @return \DateTime
+     */
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
+    }
 }
+

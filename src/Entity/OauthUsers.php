@@ -141,7 +141,7 @@ class OauthUsers
     private $modifiedAt;
 
     /**
-     * @var \Application\Entity\CoreRoles
+     * @var \Adteam\Core\Admin\Checkout\Entity\CoreRoles
      *
      * @ORM\ManyToOne(targetEntity="Adteam\Core\Admin\Checkout\Entity\CoreRoles")
      * @ORM\JoinColumns({
@@ -151,7 +151,7 @@ class OauthUsers
     private $role;
 
     /**
-     * @var \Adteam\Core\Checkout\Entity\OauthUsers
+     * @var \Adteam\Core\Admin\Checkout\Entity\OauthUsers
      *
      * @ORM\ManyToOne(targetEntity="Adteam\Core\Admin\Checkout\Entity\OauthUsers")
      * @ORM\JoinColumns({
@@ -582,7 +582,7 @@ class OauthUsers
     /**
      * Set role
      *
-     * @param \Application\Entity\CoreRoles $role
+     * @param \Adteam\Core\Admin\Checkout\Entity\CoreRoles $role
      *
      * @return OauthUsers
      */
@@ -596,7 +596,7 @@ class OauthUsers
     /**
      * Get role
      *
-     * @return \Application\Entity\CoreRoles
+     * @return \Adteam\Core\Admin\Checkout\Entity\CoreRoles
      */
     public function getRole()
     {
@@ -606,7 +606,7 @@ class OauthUsers
     /**
      * Set createdBy
      *
-     * @param \Application\Entity\OauthUsers $createdBy
+     * @param \Adteam\Core\Admin\Checkout\Entity\OauthUsers $createdBy
      *
      * @return OauthUsers
      */
@@ -620,7 +620,7 @@ class OauthUsers
     /**
      * Get createdBy
      *
-     * @return \Application\Entity\OauthUsers
+     * @return \Adteam\Core\Admin\Checkout\Entity\OauthUsers
      */
     public function getCreatedBy()
     {

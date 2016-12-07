@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * CoreOrderCedis
  *
  * @ORM\Table(name="core_order_cedis", indexes={@ORM\Index(name="core_order_cedis_ibfk_1", columns={"cedis_id"}), @ORM\Index(name="core_order_cedis_ibfk_2", columns={"order_id"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Adteam\Core\Admin\Checkout\Repository\CoreOrderCedisRepository")
  */
 class CoreOrderCedis
 {
@@ -22,7 +22,7 @@ class CoreOrderCedis
     private $id;
 
     /**
-     * @var \Adteam\Core\Checkout\Entity\CoreCedis
+     * @var \Adteam\Core\Admin\Checkout\Entity\CoreCedis
      *
      * @ORM\ManyToOne(targetEntity="Adteam\Core\Admin\Checkout\Entity\CoreCedis")
      * @ORM\JoinColumns({
@@ -32,7 +32,7 @@ class CoreOrderCedis
     private $cedis;
 
     /**
-     * @var \Adteam\Core\Checkout\Entity\CoreOrders
+     * @var \Adteam\Core\Admin\Checkout\Entity\CoreOrders
      *
      * @ORM\ManyToOne(targetEntity="Adteam\Core\Admin\Checkout\Entity\CoreOrders")
      * @ORM\JoinColumns({
@@ -55,7 +55,7 @@ class CoreOrderCedis
     /**
      * Set cedis
      *
-     * @param \Adteam\Core\Checkout\Entity\CoreCedis $cedis
+     * @param \Adteam\Core\Admin\Checkout\Entity\CoreCedis $cedis
      *
      * @return CoreOrderCedis
      */
@@ -69,7 +69,7 @@ class CoreOrderCedis
     /**
      * Get cedis
      *
-     * @return \Adteam\Core\Checkout\Entity\CoreCedis
+     * @return \Adteam\Core\Admin\Checkout\Entity\CoreCedis
      */
     public function getCedis()
     {
@@ -79,7 +79,7 @@ class CoreOrderCedis
     /**
      * Set order
      *
-     * @param \Adteam\Core\Checkout\Entity\CoreOrders $order
+     * @param \Adteam\Core\Admin\Checkout\Entity\CoreOrders $order
      *
      * @return CoreOrderCedis
      */
@@ -93,7 +93,7 @@ class CoreOrderCedis
     /**
      * Get order
      *
-     * @return \Adteam\Core\Checkout\Entity\CoreOrders
+     * @return \Adteam\Core\Admin\Checkout\Entity\CoreOrders
      */
     public function getOrder()
     {

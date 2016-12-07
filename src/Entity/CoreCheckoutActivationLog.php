@@ -1,6 +1,6 @@
 <?php
 
-namespace Adteam\Core\Checkout\Entity;
+namespace Adteam\Core\Admin\Checkout\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * CoreCheckoutActivationLog
  *
  * @ORM\Table(name="core_checkout_activation_log", indexes={@ORM\Index(name="core_audit_logs_ibfk_2", columns={"requested_by"})})
- * @ORM\Entity(repositoryClass="Adteam\Core\Checkout\Repository\CoreCheckoutActivationLogRepository")
+ * @ORM\Entity
  */
 class CoreCheckoutActivationLog
 {
@@ -36,9 +36,9 @@ class CoreCheckoutActivationLog
     private $status;
 
     /**
-     * @var \Adteam\Core\Checkout\Entity\OauthUsers
+     * @var \Adteam\Core\Admin\Checkout\Entity\OauthUsers
      *
-     * @ORM\ManyToOne(targetEntity="Adteam\Core\Checkout\Entity\OauthUsers")
+     * @ORM\ManyToOne(targetEntity="Adteam\Core\Admin\Checkout\Entity\OauthUsers")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="requested_by", referencedColumnName="id", nullable=true)
      * })
@@ -107,11 +107,11 @@ class CoreCheckoutActivationLog
     /**
      * Set requestedBy
      *
-     * @param \Adteam\Core\Checkout\Entity\OauthUsers $requestedBy
+     * @param \Adteam\Core\Admin\Checkout\Entity\OauthUsers $requestedBy
      *
      * @return CoreCheckoutActivationLog
      */
-    public function setRequestedBy(\Adteam\Core\Checkout\Entity\OauthUsers $requestedBy = null)
+    public function setRequestedBy(\Adteam\Core\Admin\Checkout\Entity\OauthUsers $requestedBy = null)
     {
         $this->requestedBy = $requestedBy;
 
@@ -121,7 +121,7 @@ class CoreCheckoutActivationLog
     /**
      * Get requestedBy
      *
-     * @return \Adteam\Core\Checkout\Entity\OauthUsers
+     * @return \Adteam\Core\Admin\Checkout\Entity\OauthUsers
      */
     public function getRequestedBy()
     {

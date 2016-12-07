@@ -1,6 +1,6 @@
 <?php
 
-namespace Adteam\Core\Checkout\Entity;
+namespace Adteam\Core\Admin\Checkout\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * CoreUserCartItems
  *
  * @ORM\Table(name="core_user_cart_items", uniqueConstraints={@ORM\UniqueConstraint(name="AK_cart", columns={"user_id", "product_id"})}, indexes={@ORM\Index(name="core_user_cart_ibfk_2", columns={"product_id"}), @ORM\Index(name="IDX_646F80F1A76ED395", columns={"user_id"})})
- * @ORM\Entity(repositoryClass="Adteam\Core\Checkout\Repository\CoreUserCartItemsRepository")
+ * @ORM\Entity
  */
 class CoreUserCartItems
 {
@@ -36,9 +36,9 @@ class CoreUserCartItems
     private $dateAdded;
 
     /**
-     * @var \Adteam\Core\Checkout\Entity\OauthUsers
+     * @var \Adteam\Core\Admin\Checkout\Entity\OauthUsers
      *
-     * @ORM\ManyToOne(targetEntity="Adteam\Core\Checkout\Entity\OauthUsers")
+     * @ORM\ManyToOne(targetEntity="Adteam\Core\Admin\Checkout\Entity\OauthUsers")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
      * })
@@ -46,9 +46,9 @@ class CoreUserCartItems
     private $user;
 
     /**
-     * @var \Adteam\Core\Checkout\Entity\CoreProducts
+     * @var \Adteam\Core\Admin\Checkout\Entity\CoreProducts
      *
-     * @ORM\ManyToOne(targetEntity="Adteam\Core\Checkout\Entity\CoreProducts")
+     * @ORM\ManyToOne(targetEntity="Adteam\Core\Admin\Checkout\Entity\CoreProducts")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="product_id", referencedColumnName="id", nullable=true)
      * })
@@ -117,11 +117,11 @@ class CoreUserCartItems
     /**
      * Set user
      *
-     * @param \Adteam\Core\Checkout\Entity\OauthUsers $user
+     * @param \Adteam\Core\Admin\Checkout\Entity\OauthUsers $user
      *
      * @return CoreUserCartItems
      */
-    public function setUser(\Application\Entity\OauthUsers $user = null)
+    public function setUser(\Adteam\Core\Admin\Checkout\Entity\OauthUsers $user = null)
     {
         $this->user = $user;
 
@@ -131,7 +131,7 @@ class CoreUserCartItems
     /**
      * Get user
      *
-     * @return \Adteam\Core\Checkout\Entity\OauthUsers
+     * @return \Adteam\Core\Admin\Checkout\Entity\OauthUsers
      */
     public function getUser()
     {
@@ -141,11 +141,11 @@ class CoreUserCartItems
     /**
      * Set product
      *
-     * @param \Adteam\Core\Checkout\Entity\CoreProducts $product
+     * @param \Adteam\Core\Admin\Checkout\Entity\CoreProducts $product
      *
      * @return CoreUserCartItems
      */
-    public function setProduct(\Application\Entity\CoreProducts $product = null)
+    public function setProduct(\Adteam\Core\Admin\Checkout\Entity\CoreProducts $product = null)
     {
         $this->product = $product;
 
@@ -155,7 +155,7 @@ class CoreUserCartItems
     /**
      * Get product
      *
-     * @return \Adteam\Core\Checkout\Entity\CoreProducts
+     * @return \Adteam\Core\Admin\Checkout\Entity\CoreProducts
      */
     public function getProduct()
     {

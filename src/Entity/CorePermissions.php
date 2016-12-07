@@ -13,16 +13,6 @@ use Doctrine\ORM\Mapping as ORM;
 class CorePermissions
 {
     /**
-     * Permission type from $permission field: 'allow'
-     */
-    const PERMISSION_ALLOW = 'allow';
-
-    /**
-     * Permission type from $permission field: 'deny'
-     */
-    const PERMISSION_DENY = 'deny';
-    
-    /**
      * @var integer
      *
      * @ORM\Column(name="id", type="integer", precision=0, scale=0, nullable=false, unique=false)
@@ -39,7 +29,17 @@ class CorePermissions
     private $permission;
 
     /**
-     * @var \Application\Entity\CoreResources
+     * @var \Adteam\Core\Admin\Checkout\Entity\CoreRoles
+     *
+     * @ORM\ManyToOne(targetEntity="Adteam\Core\Admin\Checkout\Entity\CoreRoles")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="role_id", referencedColumnName="id", nullable=true)
+     * })
+     */
+    private $role;
+
+    /**
+     * @var \Adteam\Core\Admin\Checkout\Entity\CoreResources
      *
      * @ORM\ManyToOne(targetEntity="Adteam\Core\Admin\Checkout\Entity\CoreResources")
      * @ORM\JoinColumns({
@@ -47,16 +47,6 @@ class CorePermissions
      * })
      */
     private $resource;
-
-    /**
-     * @var \Application\Entity\CoreRoles
-     *
-     * @ORM\ManyToOne(targetEntity="Adteam\Core\Admin\Checkout\Entity", inversedBy="permissions")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="role_id", referencedColumnName="id", nullable=true)
-     * })
-     */
-    private $role;
 
 
     /**
@@ -94,33 +84,9 @@ class CorePermissions
     }
 
     /**
-     * Set resource
-     *
-     * @param \Application\Entity\CoreResources $resource
-     *
-     * @return CorePermissions
-     */
-    public function setResource(\Adteam\Core\Admin\Checkout\Entity\CoreResources $resource = null)
-    {
-        $this->resource = $resource;
-
-        return $this;
-    }
-
-    /**
-     * Get resource
-     *
-     * @return \Application\Entity\CoreResources
-     */
-    public function getResource()
-    {
-        return $this->resource;
-    }
-
-    /**
      * Set role
      *
-     * @param \Application\Entity\CoreRoles $role
+     * @param \Adteam\Core\Admin\Checkout\Entity\CoreRoles $role
      *
      * @return CorePermissions
      */
@@ -134,11 +100,35 @@ class CorePermissions
     /**
      * Get role
      *
-     * @return \Application\Entity\CoreRoles
+     * @return \Adteam\Core\Admin\Checkout\Entity\CoreRoles
      */
     public function getRole()
     {
         return $this->role;
+    }
+
+    /**
+     * Set resource
+     *
+     * @param \Adteam\Core\Admin\Checkout\Entity\CoreResources $resource
+     *
+     * @return CorePermissions
+     */
+    public function setResource(\Adteam\Core\Admin\Checkout\Entity\CoreResources $resource = null)
+    {
+        $this->resource = $resource;
+
+        return $this;
+    }
+
+    /**
+     * Get resource
+     *
+     * @return \Adteam\Core\Admin\Checkout\Entity\CoreResources
+     */
+    public function getResource()
+    {
+        return $this->resource;
     }
 }
 

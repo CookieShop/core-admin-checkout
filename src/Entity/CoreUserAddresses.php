@@ -5,12 +5,12 @@ namespace Adteam\Core\Admin\Checkout\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * CoreOrderAddressses
+ * CoreUserAddresses
  *
- * @ORM\Table(name="core_order_addressses", indexes={@ORM\Index(name="core_order_addressses_ibfk_1", columns={"order_id"}), @ORM\Index(name="core_order_addressses_ibfk_2", columns={"user_id"})})
- * @ORM\Entity
+ * @ORM\Table(name="core_user_addresses", indexes={@ORM\Index(name="user_id", columns={"user_id"})})
+ * @ORM\Entity(repositoryClass="Adteam\Core\Admin\Checkout\Repository\CoreUserAddressesRepository")
  */
-class CoreOrderAddressses
+class CoreUserAddresses
 {
     /**
      * @var integer
@@ -24,75 +24,72 @@ class CoreOrderAddressses
     /**
      * @var string
      *
-     * @ORM\Column(name="street", type="string", length=255, precision=0, scale=0, nullable=false, unique=false)
+     * @ORM\Column(name="street", type="string", length=255, precision=0, scale=0, nullable=true, unique=false)
      */
     private $street;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="ext_number", type="string", length=255, precision=0, scale=0, nullable=false, unique=false)
+     * @ORM\Column(name="ext_number", type="string", length=255, precision=0, scale=0, nullable=true, unique=false)
      */
     private $extNumber;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="int_number", type="string", length=255, precision=0, scale=0, nullable=false, unique=false)
+     * @ORM\Column(name="int_number", type="string", length=255, precision=0, scale=0, nullable=true, unique=false)
      */
     private $intNumber;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="zip_code", type="string", length=255, precision=0, scale=0, nullable=false, unique=false)
+     * @ORM\Column(name="zip_code", type="string", length=255, precision=0, scale=0, nullable=true, unique=false)
      */
     private $zipCode;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="reference", type="string", length=255, precision=0, scale=0, nullable=false, unique=false)
+     * @ORM\Column(name="reference", type="string", length=255, precision=0, scale=0, nullable=true, unique=false)
      */
     private $reference;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="location", type="string", length=255, precision=0, scale=0, nullable=false, unique=false)
+     * @ORM\Column(name="location", type="string", length=255, precision=0, scale=0, nullable=true, unique=false)
      */
     private $location;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="city", type="string", length=255, precision=0, scale=0, nullable=false, unique=false)
+     * @ORM\Column(name="city", type="string", length=255, precision=0, scale=0, nullable=true, unique=false)
      */
     private $city;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="town", type="string", length=255, precision=0, scale=0, nullable=false, unique=false)
+     * @ORM\Column(name="town", type="string", length=255, precision=0, scale=0, nullable=true, unique=false)
      */
     private $town;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="state", type="string", length=255, precision=0, scale=0, nullable=false, unique=false)
+     * @ORM\Column(name="state", type="string", length=255, precision=0, scale=0, nullable=true, unique=false)
      */
     private $state;
 
     /**
-     * @var \Adteam\Core\Admin\Checkout\Entity\CoreOrders
+     * @var boolean
      *
-     * @ORM\ManyToOne(targetEntity="Adteam\Core\Admin\Checkout\Entity\CoreOrders")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="order_id", referencedColumnName="id", nullable=true)
-     * })
+     * @ORM\Column(name="main", type="boolean", precision=0, scale=0, nullable=false, unique=false)
      */
-    private $order;
+    private $main;
 
     /**
      * @var \Adteam\Core\Admin\Checkout\Entity\OauthUsers
@@ -120,7 +117,7 @@ class CoreOrderAddressses
      *
      * @param string $street
      *
-     * @return CoreOrderAddressses
+     * @return CoreUserAddresses
      */
     public function setStreet($street)
     {
@@ -144,7 +141,7 @@ class CoreOrderAddressses
      *
      * @param string $extNumber
      *
-     * @return CoreOrderAddressses
+     * @return CoreUserAddresses
      */
     public function setExtNumber($extNumber)
     {
@@ -168,7 +165,7 @@ class CoreOrderAddressses
      *
      * @param string $intNumber
      *
-     * @return CoreOrderAddressses
+     * @return CoreUserAddresses
      */
     public function setIntNumber($intNumber)
     {
@@ -192,7 +189,7 @@ class CoreOrderAddressses
      *
      * @param string $zipCode
      *
-     * @return CoreOrderAddressses
+     * @return CoreUserAddresses
      */
     public function setZipCode($zipCode)
     {
@@ -216,7 +213,7 @@ class CoreOrderAddressses
      *
      * @param string $reference
      *
-     * @return CoreOrderAddressses
+     * @return CoreUserAddresses
      */
     public function setReference($reference)
     {
@@ -240,7 +237,7 @@ class CoreOrderAddressses
      *
      * @param string $location
      *
-     * @return CoreOrderAddressses
+     * @return CoreUserAddresses
      */
     public function setLocation($location)
     {
@@ -264,7 +261,7 @@ class CoreOrderAddressses
      *
      * @param string $city
      *
-     * @return CoreOrderAddressses
+     * @return CoreUserAddresses
      */
     public function setCity($city)
     {
@@ -288,7 +285,7 @@ class CoreOrderAddressses
      *
      * @param string $town
      *
-     * @return CoreOrderAddressses
+     * @return CoreUserAddresses
      */
     public function setTown($town)
     {
@@ -312,7 +309,7 @@ class CoreOrderAddressses
      *
      * @param string $state
      *
-     * @return CoreOrderAddressses
+     * @return CoreUserAddresses
      */
     public function setState($state)
     {
@@ -332,27 +329,27 @@ class CoreOrderAddressses
     }
 
     /**
-     * Set order
+     * Set main
      *
-     * @param \Adteam\Core\Admin\Checkout\Entity\CoreOrders $order
+     * @param boolean $main
      *
-     * @return CoreOrderAddressses
+     * @return CoreUserAddresses
      */
-    public function setOrder(\Adteam\Core\Admin\Checkout\Entity\CoreOrders $order = null)
+    public function setMain($main)
     {
-        $this->order = $order;
+        $this->main = $main;
 
         return $this;
     }
 
     /**
-     * Get order
+     * Get main
      *
-     * @return \Adteam\Core\Admin\Checkout\Entity\CoreOrders
+     * @return boolean
      */
-    public function getOrder()
+    public function getMain()
     {
-        return $this->order;
+        return $this->main;
     }
 
     /**
@@ -360,7 +357,7 @@ class CoreOrderAddressses
      *
      * @param \Adteam\Core\Admin\Checkout\Entity\OauthUsers $user
      *
-     * @return CoreOrderAddressses
+     * @return CoreUserAddresses
      */
     public function setUser(\Adteam\Core\Admin\Checkout\Entity\OauthUsers $user = null)
     {

@@ -50,7 +50,7 @@ class CoreResources
     private $description;
 
     /**
-     * @var \Application\Entity\CoreResources
+     * @var \Adteam\Core\Admin\Checkout\Entity\CoreResources
      *
      * @ORM\ManyToOne(targetEntity="Adteam\Core\Admin\Checkout\Entity\CoreResources")
      * @ORM\JoinColumns({
@@ -169,7 +169,7 @@ class CoreResources
     /**
      * Set parent
      *
-     * @param \Application\Entity\CoreResources $parent
+     * @param \Adteam\Core\Admin\Checkout\Entity\CoreResources $parent
      *
      * @return CoreResources
      */
@@ -183,7 +183,7 @@ class CoreResources
     /**
      * Get parent
      *
-     * @return \Application\Entity\CoreResources
+     * @return \Adteam\Core\Admin\Checkout\Entity\CoreResources
      */
     public function getParent()
     {

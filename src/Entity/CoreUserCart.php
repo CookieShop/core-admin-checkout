@@ -1,6 +1,6 @@
 <?php
 
-namespace Adteam\Core\Checkout\Entity;
+namespace Adteam\Core\Admin\Checkout\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -24,7 +24,6 @@ class CoreUserCart
     /**
      * @var integer
      *
-     * @ORM\Version
      * @ORM\Column(name="version", type="integer", precision=0, scale=0, nullable=false, unique=false)
      */
     private $version;
@@ -37,9 +36,9 @@ class CoreUserCart
     private $updatedAt;
 
     /**
-     * @var \Application\Entity\OauthUsers
+     * @var \Adteam\Core\Admin\Checkout\Entity\OauthUsers
      *
-     * @ORM\ManyToOne(targetEntity="Application\Entity\OauthUsers")
+     * @ORM\ManyToOne(targetEntity="Adteam\Core\Admin\Checkout\Entity\OauthUsers")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
      * })
@@ -108,11 +107,11 @@ class CoreUserCart
     /**
      * Set user
      *
-     * @param \Application\Entity\OauthUsers $user
+     * @param \Adteam\Core\Admin\Checkout\Entity\OauthUsers $user
      *
      * @return CoreUserCart
      */
-    public function setUser(\Application\Entity\OauthUsers $user = null)
+    public function setUser(\Adteam\Core\Admin\Checkout\Entity\OauthUsers $user = null)
     {
         $this->user = $user;
 
@@ -122,7 +121,7 @@ class CoreUserCart
     /**
      * Get user
      *
-     * @return \Application\Entity\OauthUsers
+     * @return \Adteam\Core\Admin\Checkout\Entity\OauthUsers
      */
     public function getUser()
     {
