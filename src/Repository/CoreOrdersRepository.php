@@ -91,7 +91,7 @@ class CoreOrdersRepository extends EntityRepository
                     ->createQueryBuilder('U')
                     ->select('U.deletedAt')
                     ->where('U.id = :id')
-                    ->andWhere("O.deletedAt IS NULL") 
+                    ->andWhere("U.deletedAt IS NULL") 
                     ->setParameter('id', $id)
                     ->getQuery()->getSingleResult(); 
             if(isset($result['deletedAt'])||is_null($result['deletedAt'])){
