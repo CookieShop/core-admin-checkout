@@ -1,6 +1,6 @@
 <?php
 
-namespace Adteam\Core\Checkout\Entity;
+namespace Adteam\Core\Admin\Checkout\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -24,7 +24,7 @@ class CoreOrderCedis
     /**
      * @var \Adteam\Core\Checkout\Entity\CoreCedis
      *
-     * @ORM\ManyToOne(targetEntity="Adteam\Core\Checkout\Entity\CoreCedis")
+     * @ORM\ManyToOne(targetEntity="Adteam\Core\Admin\Checkout\Entity\CoreCedis")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="cedis_id", referencedColumnName="id", nullable=true)
      * })
@@ -34,7 +34,7 @@ class CoreOrderCedis
     /**
      * @var \Adteam\Core\Checkout\Entity\CoreOrders
      *
-     * @ORM\ManyToOne(targetEntity="Adteam\Core\Checkout\Entity\CoreOrders")
+     * @ORM\ManyToOne(targetEntity="Adteam\Core\Admin\Checkout\Entity\CoreOrders")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="order_id", referencedColumnName="id", nullable=true)
      * })
@@ -59,7 +59,7 @@ class CoreOrderCedis
      *
      * @return CoreOrderCedis
      */
-    public function setCedis(\Adteam\Core\Checkout\Entity\CoreCedis $cedis = null)
+    public function setCedis(\Adteam\Core\Admin\Checkout\Entity\CoreCedis $cedis = null)
     {
         $this->cedis = $cedis;
 
@@ -83,7 +83,7 @@ class CoreOrderCedis
      *
      * @return CoreOrderCedis
      */
-    public function setOrder(\Adteam\Core\Checkout\Entity\CoreOrders $order = null)
+    public function setOrder(\Adteam\Core\Admin\Checkout\Entity\CoreOrders $order = null)
     {
         $this->order = $order;
 

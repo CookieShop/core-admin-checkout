@@ -1,6 +1,6 @@
 <?php
 
-namespace Adteam\Core\Checkout\Entity;
+namespace Adteam\Core\Admin\Checkout\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -87,7 +87,7 @@ class CoreOrderAddressses
     /**
      * @var \Adteam\Core\Checkout\Entity\CoreOrders
      *
-     * @ORM\ManyToOne(targetEntity="Adteam\Core\Checkout\Entity\CoreOrders")
+     * @ORM\ManyToOne(targetEntity="Adteam\Core\Admin\Checkout\Entity\CoreOrders")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="order_id", referencedColumnName="id", nullable=true)
      * })
@@ -97,7 +97,7 @@ class CoreOrderAddressses
     /**
      * @var \Adteam\Core\Checkout\Entity\OauthUsers
      *
-     * @ORM\ManyToOne(targetEntity="Adteam\Core\Checkout\Entity\OauthUsers")
+     * @ORM\ManyToOne(targetEntity="Adteam\Core\Admin\Checkout\Entity\OauthUsers")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
      * })
@@ -338,7 +338,7 @@ class CoreOrderAddressses
      *
      * @return CoreOrderAddressses
      */
-    public function setOrder(\Adteam\Core\Checkout\Entity\CoreOrders $order = null)
+    public function setOrder(\Adteam\Core\Admin\Checkout\Entity\CoreOrders $order = null)
     {
         $this->order = $order;
 
@@ -362,7 +362,7 @@ class CoreOrderAddressses
      *
      * @return CoreOrderAddressses
      */
-    public function setUser(\Adteam\Core\Checkout\Entity\OauthUsers $user = null)
+    public function setUser(\Adteam\Core\Admin\Checkout\Entity\OauthUsers $user = null)
     {
         $this->user = $user;
 

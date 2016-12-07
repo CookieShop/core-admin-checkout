@@ -14,6 +14,12 @@ use Adteam\Core\Admin\Checkout\Entity\CoreUserTransactions;
 use Adteam\Core\Admin\Checkout\Entity\OauthUsers;
 use Adteam\Core\Admin\Checkout\Entity\CoreProducts;
 use Adteam\Core\Admin\Checkout\Entity\CoreOrderProducts;
+use Adteam\Core\Admin\Checkout\Entity\CoreOrderAddressses;
+use Adteam\Core\Admin\Checkout\Entity\CoreOrderCedis;
+use Adteam\Core\Admin\Checkout\Entity\CoreCedis;
+use DateTime;
+use DateTimeZone;
+
 /**
  * Description of CoreOrdersRepository
  *
@@ -22,28 +28,70 @@ use Adteam\Core\Admin\Checkout\Entity\CoreOrderProducts;
 class CoreOrdersRepository extends EntityRepository 
 {
 
+    /**
+     * 
+     * @param type $params
+     * @return type
+     */
     public function fetchAll($params)
     {
-        return $this->createQueryBuilder('O')
+        $entities = [];
+        $result = $this->createQueryBuilder('O')
                ->select("O.id,O.createdAt,U.id as userId ,C.id as createdById, O.total")
                ->innerJoin('O.user', 'U')
                ->innerJoin('O.createdBy', 'C')
                ->where("O.deletedAt IS NULL")            
-               ->getQuery()->getResult();
+               ->getQuery()->iterate();
+       foreach ($result as $items){           
+           $item = reset($items);
+           $entities[] = [
+               'id'=>$item['id'],
+               'createdAt'=>  $this->formatObjectDateTime($item['createdAt']),
+               'userId'=>  $this->getUser($item['userId']),
+               'createdById'=>$this->getUser($item['createdById']),
+               'total'=>$item['total']
+           ]; 
+       }
+      return $entities;
     }
     
+    /**
+     * 
+     * @param type $id
+     * @return type
+     */
     public function fetch($id)
     {
-        return $this->createQueryBuilder('O')
+        $entities = [];
+        $result = $this->createQueryBuilder('O')
                ->select("O.id,O.createdAt,U.id as userId ,C.id as createdById, O.total")
                ->innerJoin('O.user', 'U') 
                ->innerJoin('O.createdBy', 'C')
                ->where("O.deletedAt IS NULL") 
                ->andWhere('O.id = :id') 
                ->setParameter('id', $id)
-               ->getQuery()->getOneOrNullResult();      
+               ->getQuery()->iterate();  
+       foreach ($result as $items){  
+           $item = reset($items);
+           $entities[] = [
+               'id'=>$item['id'],
+               'createdAt'=>  $this->formatObjectDateTime($item['createdAt']),
+               'userId'=>  $this->getUser($item['userId']),
+               'createdById'=>$this->getUser($item['createdById'],false),
+               'address'=>  $this->getAdress($id),
+               'cedis'=>  $this->getCedis($id),
+               'items'=>  $this->getProducts($id),
+               'total'=>$item['total']
+           ]; 
+       }
+      return $entities;        
     }
     
+    /**
+     * 
+     * @param type $id
+     * @return boolean
+     */
     public function delete($id)
     {
         if(!$this->isDelete($id)){
@@ -59,6 +107,11 @@ class CoreOrdersRepository extends EntityRepository
 
     }
     
+    /**
+     * 
+     * @param type $data
+     * @return type
+     */
     public function create($data)
     {
         $currentRepo = $this;        
@@ -83,6 +136,12 @@ class CoreOrdersRepository extends EntityRepository
         );        
     }            
 
+    /**
+     * 
+     * @param type $id
+     * @return boolean
+     * @throws \InvalidArgumentException
+     */
     private function isDelete($id)
     {
         $isDelete = true;
@@ -105,11 +164,28 @@ class CoreOrdersRepository extends EntityRepository
 
     } 
     
+    /**
+     * 
+     * @param type $format
+     * @return type
+     */
     private function formatTimestamp($format='d-m-Y H:i:s'){
-        $date = new \DateTime('now', new \DateTimeZone('America/Mexico_City'));
+        $date = new DateTime('now', new DateTimeZone('America/Mexico_City'));
         return $date->format($format);
     }  
     
+    /**
+     * 
+     * @param DateTime $datetime
+     * @param type $format
+     * @return type
+     */
+    private function formatObjectDateTime(DateTime $datetime,$format='d-m-Y H:i:s')
+    {
+        $datetime->setTimezone(new DateTimeZone('America/Mexico_City'));
+        return $datetime->format($format);
+    }
+
     /**
      * 
      * @param type $idOrder
@@ -165,5 +241,121 @@ class CoreOrdersRepository extends EntityRepository
     {
         return $this->_em->getRepository(CoreUserTransactions::class)
                 ->getBalanceSnapshot($params['identity']['id']);
-    }    
+    } 
+    
+    /**
+     * 
+     * @param type $userId
+     * @param type $basic
+     * @return type
+     */
+    public function getUser($userId,$basic=true)
+    {
+        $result =  $this->_em->getRepository(OauthUsers::class)
+                ->findOneBy(array('id'=>$userId));
+        if(is_null($result)){
+            return [];
+        }
+        if($basic){
+            return [
+                    'id'=>$result->getId(),
+                    'displayName'=>$result->getDisplayName()
+                   ];            
+        }else{
+            return [
+                    'id'=>$result->getId(),
+                    'username'=>$result->getUsername(),                    
+                    'firstName'=>$result->getFirstName(),
+                    'lastName'=>$result->getLastName(),
+                    'surname'=>$result->getSurname(),
+                    'email'=>$result->getEmail(),
+                    'displayName'=>$result->getDisplayName(),
+                    'telephone1'=>$result->getTelephone1(),
+                    'telephone2'=>$result->getTelephone1(),
+                    'mobile'=>$result->getMobile()                    
+                   ];            
+        }
+    }
+    
+    /**
+     * 
+     * @param type $orderId
+     * @return type
+     */
+    public function getAdress($orderId)
+    {
+        $order= $this->_em->getReference(
+                CoreOrderAddressses::class, $orderId);        
+        $result =  $this->_em->getRepository(CoreOrderAddressses::class)
+                ->findOneBy(array('order'=>$order));
+        if(is_null($result)){
+            return [];
+        }        
+        return [
+                'street'=>$result->getStreet(),                    
+                'extNumber'=>$result->getExtNumber(),
+                'intNumber'=>$result->getIntNumber(),
+                'zipCode'=>$result->getZipCode(),
+                'reference'=>$result->getReference(),
+                'city'=>$result->getCity(),
+                'town'=>$result->getTown()           
+               ];         
+    }  
+    
+    /**
+     * 
+     * @param type $orderId
+     * @return type
+     */
+    public function getCedis($orderId)
+    {
+        $order= $this->_em->getReference(
+                CoreOrderCedis::class, $orderId);     
+        $result =  $this->_em->getRepository(CoreOrderCedis::class)
+                ->findOneBy(array('order'=>$order));
+        if(is_null($result)){
+            return [];
+        }
+        $cedis =  $this->_em->getRepository(CoreCedis::class)
+                ->findOneBy(array('id'=>$result->getCedis()->getId()));
+        return [
+                'cedisId'=>$cedis->getCedisId(),                    
+                'namesCedis'=>$cedis->getNamesCedis(),
+                'street'=>$cedis->getStreet(),
+                'extNumber'=>$cedis->getExtNumber(),
+                'intNumber'=>$cedis->getIntNumber(),
+                'location'=>$cedis->getLocation(),
+                'reference'=>$cedis->getReference(),
+                'city'=>$cedis->getCity(),
+                'state'=>$cedis->getState(),
+                'zipCode'=>$cedis->getZipCode(),
+                'telephone'=>$cedis->getTelephone(),
+                'extra'=>$cedis->getExtra()
+               ];         
+    }  
+    
+    /**
+     * 
+     * @param type $orderId
+     * @return type
+     */
+    public function getProducts($orderId)
+    {
+        $order= $this->_em->getReference(CoreOrderProducts::class, $orderId);     
+        $result =  $this->_em->getRepository(CoreOrderProducts::class)
+                ->findOneBy(array('order'=>$order));   
+        if(is_null($result)){
+            return [];
+        }
+        return [
+                'productId'=>$result->getId(),                    
+                'sku'=>$result->getSku(),
+                'description'=>$result->getDescription(),
+                'brand'=>$result->getBrand(),
+                'title'=>$result->getTitle(),
+                'price'=>$result->getPrice(),
+                'quantity'=>$result->getQuantity(),
+                'lineTotal'=>$result->getPrice()*$result->getQuantity()
+               ];         
+    }
 }
