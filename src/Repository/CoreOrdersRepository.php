@@ -76,7 +76,7 @@ class CoreOrdersRepository extends EntityRepository
            $entities[] = [
                'id'=>$item['id'],
                'createdAt'=>  $this->formatObjectDateTime($item['createdAt']),
-               'userId'=>  $this->getUser($item['userId']),
+               'userId'=>  $this->getUser($item['userId'],false),
                'createdById'=>$this->getUser($item['createdById'],false),
                'address'=>  $this->getAdress($id),
                'cedis'=>  $this->getCedis($id),
@@ -341,21 +341,22 @@ class CoreOrdersRepository extends EntityRepository
      */
     public function getProducts($orderId)
     {
+        $entities= [];
         $order= $this->_em->getReference(CoreOrderProducts::class, $orderId);     
         $result =  $this->_em->getRepository(CoreOrderProducts::class)
-                ->findOneBy(array('order'=>$order));   
-        if(is_null($result)){
-            return [];
+                ->findAll(array('order'=>$order));  
+        foreach ($result as $item){
+            $entities[] =  [
+                'productId'=>$item->getId(),                    
+                'sku'=>$item->getSku(),
+                'description'=>$item->getDescription(),
+                'brand'=>$item->getBrand(),
+                'title'=>$item->getTitle(),
+                'price'=>$item->getPrice(),
+                'quantity'=>$item->getQuantity(),
+                'lineTotal'=>$item->getPrice()*$item->getQuantity()
+               ];
         }
-        return [
-                'productId'=>$result->getId(),                    
-                'sku'=>$result->getSku(),
-                'description'=>$result->getDescription(),
-                'brand'=>$result->getBrand(),
-                'title'=>$result->getTitle(),
-                'price'=>$result->getPrice(),
-                'quantity'=>$result->getQuantity(),
-                'lineTotal'=>$result->getPrice()*$result->getQuantity()
-               ];         
+        return $entities;         
     }
 }
