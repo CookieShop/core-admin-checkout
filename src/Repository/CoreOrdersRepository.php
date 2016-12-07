@@ -49,8 +49,8 @@ class CoreOrdersRepository extends EntityRepository
            $entities[] = [
                'id'=>$item['id'],
                'createdAt'=>  $this->formatObjectDateTime($item['createdAt']),
-               'userId'=>  $this->getUser($item['userId']),
-               'createdById'=>$this->getUser($item['createdById']),
+               'user'=>  $this->getUser($item['userId']),
+               'createdBy'=>$this->getUser($item['createdById']),
                'total'=>$item['total'],
                'delete'=>is_null($item['deletedAt'])?0:1
            ]; 
@@ -200,7 +200,6 @@ class CoreOrdersRepository extends EntityRepository
     public function insertCoreProducts($idOrder,$params)
     {
         $order= $this->_em->getReference(CoreOrders::class, $idOrder);
-        
         foreach ($params['cart'] as $items){
             $coreorderproducts = new CoreOrderProducts();
             $coreorderproducts->setOrder($order);            
@@ -215,7 +214,7 @@ class CoreOrdersRepository extends EntityRepository
             }
             $this->_em->persist($coreorderproducts);
             $this->_em->flush();  
-        }        
+        } 
     }
 
     /**
@@ -381,9 +380,10 @@ class CoreOrdersRepository extends EntityRepository
     public function getProducts($orderId)
     {
         $entities= [];
-        $order= $this->_em->getReference(CoreOrderProducts::class, $orderId);     
+        
+        $order= $this->_em->getReference(CoreOrders::class, $orderId);     
         $result =  $this->_em->getRepository(CoreOrderProducts::class)
-                ->findAll(array('order'=>$order));  
+                ->findBy(['order'=>$order]);  
         foreach ($result as $item){
             $entities[] =  [
                 'productId'=>$item->getId(),                    
