@@ -385,12 +385,13 @@ class CoreOrdersRepository extends EntityRepository
         $order= $this->_em->getReference(CoreOrders::class, $orderId);     
         $result =  $this->_em->getRepository(CoreOrderProducts::class)
                 ->findBy(['order'=>$order]);  
-        foreach ($result as $item){
+        foreach ($result as $item){            
             $entities[] =  [
-                'productId'=>$item->getId(),                    
+                'productId'=>$item->getProduct()->getId(),                    
                 'sku'=>$item->getSku(),
                 'description'=>$item->getDescription(),
                 'brand'=>$item->getBrand(),
+                'fileName'=> $this->getImage($item->getProduct()->getId()),
                 'title'=>$item->getTitle(),
                 'price'=>$item->getPrice(),
                 'quantity'=>$item->getQuantity(),
@@ -398,5 +399,20 @@ class CoreOrdersRepository extends EntityRepository
                ];
         }
         return $entities;         
+    }
+    
+    /**
+     * 
+     * @param type $productId
+     * @return string
+     */
+    public function getImage($productId)
+    {
+        $result =  $this->_em->getRepository(CoreProducts::class)
+                ->findOneBy(array('id'=>$productId));
+        if(!is_null($result)){
+            return $result->getFileName();
+        }
+        return '';
     }
 }
