@@ -336,8 +336,9 @@ class CoreOrdersRepository extends EntityRepository
                 'zipCode'=>$result->getZipCode(),
                 'reference'=>$result->getReference(),
                 'city'=>$result->getCity(),
-                'town'=>$result->getTown()           
-               ];         
+                'town'=>$result->getTown(), 
+                'state'=>$result->getState()
+               ];        
     }  
     
     /**
