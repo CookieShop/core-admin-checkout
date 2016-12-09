@@ -99,14 +99,21 @@ class CoreOrdersRepository extends EntityRepository
     public function delete($id)
     {
         if(!$this->isDelete($id)){
-            $this->createQueryBuilder('o')
-                 ->update(CoreOrders::class,'o')
-                 ->set('o.deletedAt',':deletedAt')  
-                 ->setParameter('deletedAt', $this->formatTimestamp('Y-m-d H:i:s'))
-                 ->where('o.id = :id')
-                 ->setParameter('id', $id)
-                 ->getQuery()->execute();  
-            return true;
+            $currentRepo = $this;
+            return $this->_em->transactional(
+                function ($em) use($currentRepo,$id) {
+                    $currentRepo->createQueryBuilder('o')
+                    ->update(CoreOrders::class,'o')
+                    ->set('o.deletedAt',':deletedAt')  
+                    ->setParameter('deletedAt', $this->formatTimestamp('Y-m-d H:i:s'))
+                    ->where('o.id = :id')
+                    ->setParameter('id', $id)
+                    ->getQuery()->execute();  
+               $order = $currentRepo->fetch($id);
+               $em->getRepository(CoreUserTransactions::class)
+              ->setTransactionsByCancell($id,$order['total'],$order['user']['id']);  
+              return true;               
+            });
         }
 
     }
@@ -338,7 +345,7 @@ class CoreOrdersRepository extends EntityRepository
                 'city'=>$result->getCity(),
                 'town'=>$result->getTown(), 
                 'state'=>$result->getState()
-               ];        
+               ];         
     }  
     
     /**
@@ -401,11 +408,6 @@ class CoreOrdersRepository extends EntityRepository
         return $entities;         
     }
     
-    /**
-     * 
-     * @param type $productId
-     * @return string
-     */
     public function getImage($productId)
     {
         $result =  $this->_em->getRepository(CoreProducts::class)

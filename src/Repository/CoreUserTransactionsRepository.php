@@ -14,6 +14,8 @@ namespace Adteam\Core\Admin\Checkout\Repository;
  * @author dev
  */
 use Doctrine\ORM\EntityRepository;
+use Adteam\Core\Admin\Checkout\Entity\CoreUserTransactions;
+use Adteam\Core\Admin\Checkout\Entity\OauthUsers;
 
 class CoreUserTransactionsRepository extends EntityRepository
 {
@@ -32,4 +34,21 @@ class CoreUserTransactionsRepository extends EntityRepository
             ->getQuery()
             ->getSingleScalarResult();
     }
+    
+    public function setTransactionsByCancell($CorrelationId,$amount,$userId)
+    {
+        $user= $this->_em->getReference(
+                OauthUsers::class, $userId);
+        $CoreUserTransactions = new CoreUserTransactions();
+        $CoreUserTransactions->setUser($user);
+        $CoreUserTransactions->setAmount($amount); 
+        $CoreUserTransactions->setType(
+                CoreUserTransactions::TYPE_ORDER_CANCELLATION);
+        $CoreUserTransactions->setCorrelationId($CorrelationId);
+        $snp = $this->getBalanceSnapshot($userId);
+        $CoreUserTransactions->setBalanceSnapshot($snp);
+        $this->_em->persist($CoreUserTransactions);
+        $this->_em->flush();          
+    }
+   
 }

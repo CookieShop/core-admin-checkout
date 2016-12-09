@@ -101,9 +101,9 @@ class CoreUserTransactions
     private $appliedAt;
 
     /**
-     * @var \Adteam\Core\Checkout\Entity\OauthUsers
+     * @var \Adteam\Core\Admin\Checkout\Entity\OauthUsers
      *
-     * @ORM\ManyToOne(targetEntity="Adteam\Core\Checkout\Entity\OauthUsers")
+     * @ORM\ManyToOne(targetEntity="Adteam\Core\Admin\Checkout\Entity\OauthUsers")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
      * })
@@ -292,7 +292,7 @@ class CoreUserTransactions
     /**
      * Set user
      *
-     * @param \Application\Entity\OauthUsers $user
+     * @param \Adteam\Core\Admin\Checkout\Entity\OauthUsers $user
      *
      * @return CoreUserTransactions
      */
@@ -306,7 +306,7 @@ class CoreUserTransactions
     /**
      * Get user
      *
-     * @return \Application\Entity\OauthUsers
+     * @return \Adteam\Core\Admin\Checkout\Entity\OauthUsers
      */
     public function getUser()
     {
