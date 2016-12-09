@@ -63,7 +63,7 @@ class CoreOrdersRepository extends EntityRepository
      * @param type $id
      * @return type
      */
-    public function fetch($id)
+    public function fetch($id,$url)
     {
         $entities = [];
         $result = $this->createQueryBuilder('O')
@@ -83,7 +83,7 @@ class CoreOrdersRepository extends EntityRepository
                'createdBy'=>$this->getUser($item['createdById'],false),
                'address'=>  $this->getAdress($id),
                'cedis'=>  $this->getCedis($id),
-               'items'=>  $this->getProducts($id),
+               'items'=>  $this->getProducts($id,$url),
                'total'=>$item['total'],
                'delete'=>is_null($item['deletedAt'])?0:1
            ]; 
@@ -385,7 +385,7 @@ class CoreOrdersRepository extends EntityRepository
      * @param type $orderId
      * @return type
      */
-    public function getProducts($orderId)
+    public function getProducts($orderId,$url)
     {
         $entities= [];
         
@@ -398,7 +398,7 @@ class CoreOrdersRepository extends EntityRepository
                 'sku'=>$item->getSku(),
                 'description'=>$item->getDescription(),
                 'brand'=>$item->getBrand(),
-                'fileName'=> $this->getImage($item->getProduct()->getId()),
+                'fileName'=> $url.$this->getImage($item->getProduct()->getId()),
                 'title'=>$item->getTitle(),
                 'price'=>$item->getPrice(),
                 'quantity'=>$item->getQuantity(),

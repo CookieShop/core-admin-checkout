@@ -15,7 +15,7 @@ use Adteam\Core\Admin\Checkout\Entity\OauthUsers;
 use Adteam\Core\Admin\Checkout\Entity\CoreProducts;
 use Adteam\Core\Admin\Checkout\Entity\CoreUserTransactions;
 use Adteam\Core\Admin\Checkout\Validator;
-
+use Adteam\Core\Common\ViewHelper;
 class Checkout
 {
     /**
@@ -36,6 +36,7 @@ class Checkout
      */
     protected $em;
     
+    protected  $url;
     /**
      * 
      * @param ServiceManager $service
@@ -45,17 +46,19 @@ class Checkout
         
         $this->identity = $this->service->get('authentication')
                 ->getIdentity()->getAuthenticationIdentity();
-        $this->em = $service->get(EntityManager::class);        
+        $this->em = $service->get(EntityManager::class);   
+        $ViewHelper = new ViewHelper($service);
+        $this->url = $ViewHelper->getUrl('img/');
     }
     
     public function fetchAll($params)
     {
-        return $this->em->getRepository(CoreOrders::class)->fetchAll($params);
+        return $this->em->getRepository(CoreOrders::class)->fetchAll($params,$this->url);
     }
     
     public function fetch($id)
     {
-        return $this->em->getRepository(CoreOrders::class)->fetch($id);
+        return $this->em->getRepository(CoreOrders::class)->fetch($id,$this->url);
     }
     
     public function create($dataObject)
