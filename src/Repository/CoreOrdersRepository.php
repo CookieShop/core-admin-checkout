@@ -85,7 +85,7 @@ class CoreOrdersRepository extends EntityRepository
                'cedis'=>  $this->getCedis($id),
                'items'=>  $this->getProducts($id,$url),
                'total'=>$item['total'],
-               'delete'=>is_null($item['deletedAt'])?0:1
+               'delete'=>is_null($item['deletedAt'])?null:$this->formatObjectDateTime($item['deletedAt'])
            ]; 
        }
       return $entities;        
