@@ -38,4 +38,22 @@ class CoreConfigsRepository extends EntityRepository
                ->setParameter('key', $key)
                ->getQuery()->getSingleResult();        
     }
+
+    /**
+     *
+     * @return array
+     */
+    public function getCheckoutRange()
+    {
+        $items = [];
+        $result = $this->createQueryBuilder('B')
+            ->select("B.key, B.value")
+            ->where("B.key in (:key)")
+            ->setParameter('key', ['checkout.date.start', 'checkout.date.end'])
+            ->getQuery()->getResult();
+        foreach ($result as $item) {
+            $items[$item['key']] = $item['value'];
+        }
+        return $items;
+    }
 }
