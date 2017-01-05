@@ -6,12 +6,12 @@
  * and open the template in the editor.
  */
 
-namespace Adteam\Core\Checkout\Repository;
+namespace Adteam\Core\Admin\Checkout\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use Adteam\Core\Checkout\Entity\CoreConfigs;
-use Adteam\Core\Checkout\Entity\OauthUsers;
-use Adteam\Core\Checkout\Entity\CoreCheckoutActivationLog;
+use Adteam\Core\Admin\Checkout\Entity\CoreConfigs;
+use Adteam\Core\Admin\Checkout\Entity\OauthUsers;
+use Adteam\Core\Admin\Checkout\Entity\CoreCheckoutActivationLog;
 
 class CoreCheckoutActivationLogRepository extends EntityRepository
 {
@@ -54,10 +54,10 @@ class CoreCheckoutActivationLogRepository extends EntityRepository
     {
         $isInit = false;
         $result = $this->createQueryBuilder('B')
-           ->select("B.id, B.createdAt, R.id as userId, R.displayName, B.status")
-           ->innerJoin('B.requestedBy', 'R')
-           ->getQuery()->getResult();
-        if(count($result)<=0){
+            ->select("B.id, B.createdAt, R.id as userId, R.displayName, B.status")
+            ->innerJoin('B.requestedBy', 'R')
+            ->getQuery()->getResult();
+        if (count($result) <= 0) {
             $isInit = true;
         }
         return $isInit;
@@ -127,11 +127,11 @@ class CoreCheckoutActivationLogRepository extends EntityRepository
     public function getUserByUsername($username)
     {
         return $this->_em->getRepository(OauthUsers::class)
-                ->createQueryBuilder('U')
-                ->select('U.id,U.displayName')
-                ->where('U.username = :username')
-                ->setParameter('username', $username)
-                ->getQuery()->getSingleResult();
+            ->createQueryBuilder('U')
+            ->select('U.id,U.displayName')
+            ->where('U.username = :username')
+            ->setParameter('username', $username)
+            ->getQuery()->getSingleResult();
     }
 
     /**
@@ -172,12 +172,16 @@ class CoreCheckoutActivationLogRepository extends EntityRepository
      */
     private function updateCheckoutEnabled($dateStart, $dateEnd)
     {
-        $dql ="UPDATE Adteam\Core\Checkout\Entity\CoreConfigs U SET U.value = "
-                . $dateStart." WHERE U.key like 'checkout.date.start'";
-        $this->_em->createQuery($dql)->execute();
+        if (!is_null($dateStart)) {
+            $dql = "UPDATE Adteam\Core\Checkout\Entity\CoreConfigs U SET U.value = "
+                . $dateStart . " WHERE U.key like 'checkout.date.start'";
+            $this->_em->createQuery($dql)->execute();
+        }
 
-        $dql ="UPDATE Adteam\Core\Checkout\Entity\CoreConfigs U SET U.value = "
-                . $dateEnd." WHERE U.key like 'checkout.date.end'";
-        $this->_em->createQuery($dql)->execute();
+        if (!is_null($dateEnd)) {
+            $dql = "UPDATE Adteam\Core\Checkout\Entity\CoreConfigs U SET U.value = "
+                . $dateEnd . " WHERE U.key like 'checkout.date.end'";
+            $this->_em->createQuery($dql)->execute();
+        }
     }
 }
