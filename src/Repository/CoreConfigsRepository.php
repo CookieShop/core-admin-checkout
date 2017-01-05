@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-namespace Adteam\Core\Checkout\Repository;
+namespace Adteam\Core\Admin\Checkout\Repository;
 
 use Doctrine\ORM\EntityRepository;
 

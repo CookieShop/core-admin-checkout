@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * CoreConfigs
  *
  * @ORM\Table(name="core_configs")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Adteam\Core\Admin\Checkout\Repository\CoreConfigsRepository")
  */
 class CoreConfigs
 {

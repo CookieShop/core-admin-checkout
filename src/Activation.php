@@ -6,11 +6,11 @@
  * @author Ing. Eduardo Ortiz
  * 
  */
-namespace Adteam\Core\Checkout;
+namespace Adteam\Core\Admin\Checkout;
 
 use Zend\ServiceManager\ServiceManager;
 use Doctrine\ORM\EntityManager;
-use Adteam\Core\Checkout\Entity\CoreCheckoutActivationLog;
+use Adteam\Core\Admin\Checkout\Entity\CoreCheckoutActivationLog;
 
 
 class Activation{

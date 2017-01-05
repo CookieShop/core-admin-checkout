@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * CoreCheckoutActivationLog
  *
  * @ORM\Table(name="core_checkout_activation_log", indexes={@ORM\Index(name="core_audit_logs_ibfk_2", columns={"requested_by"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Adteam\Core\Admin\Checkout\Repository\CoreCheckoutActivationLogRepository")
  */
 class CoreCheckoutActivationLog
 {
