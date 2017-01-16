@@ -25,7 +25,7 @@ class CoreCheckoutActivationLogRepository extends EntityRepository
         $config = $this->_em->getRepository(CoreConfigs::class)->getCheckoutRange();
 
         $currentTime = time();
-        $rangeStart = isset($config['checkout.date.start']) ? (int)$config['checkout.date.start'] : PHP_INT_MAX;
+        $rangeStart = isset($config['checkout.date.start']) ? (int)$config['checkout.date.start'] : 0;
         $rangeEnd = isset($config['checkout.date.end']) ? (int)$config['checkout.date.end'] : 0;
 
         $checkoutIsActive = $rangeStart <= $currentTime && $currentTime <= $rangeEnd;
@@ -39,6 +39,8 @@ class CoreCheckoutActivationLogRepository extends EntityRepository
         if (isset($result[0])) {
             $checkout = (array)$result[0];
             $checkout['enabled'] = $checkoutIsActive;
+            $checkout['dateStart'] = $rangeStart;
+            $checkout['dateEnd'] = $rangeEnd;
             return $checkout;
         }
 
