@@ -106,16 +106,6 @@ class CoreCheckoutActivationLogRepository extends EntityRepository
             // Validar rango de canje activo
             $config = $this->_em->getRepository(CoreConfigs::class)->getCheckoutRange();
 
-            $rangeStart = isset($config['checkout.date.start']) ? (int)$config['checkout.date.start'] : PHP_INT_MAX;
-            $rangeEnd = isset($config['checkout.date.end']) ? (int)$config['checkout.date.end'] : 0;
-
-            $checkoutIsActive = $rangeStart <= $currentTime && $currentTime <= $rangeEnd;
-
-            if ($checkoutIsActive === $enabled) {
-                $activo = $checkoutIsActive ? 'canje activo' : 'canje cerrado';
-                throw new \InvalidArgumentException($activo);
-            }
-
             return $this->insertLog($user, $dateStart, $dateEnd);
         }
     }
