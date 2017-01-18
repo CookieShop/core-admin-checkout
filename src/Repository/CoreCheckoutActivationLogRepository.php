@@ -94,7 +94,7 @@ class CoreCheckoutActivationLogRepository extends EntityRepository
 
         // Colocar rangos que vienen nulos
         $dateStart = is_null($dateStart) ? 0 : $dateStart;
-        $dateEnd = is_null($dateEnd) ? PHP_INT_MAX : $dateEnd;
+        $dateEnd = is_null($dateEnd) ? (pow(2, 32) - 1) : $dateEnd;
 
         // Determinar si el canje será activado (dateStart enviado y fecha actual mayor o igual a fecha de canje)
         $enabled = !is_null($dateStart) && $currentTime >= $dateStart;
