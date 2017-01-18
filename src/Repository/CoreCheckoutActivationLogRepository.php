@@ -77,8 +77,8 @@ class CoreCheckoutActivationLogRepository extends EntityRepository
         $user = $this->getUserByUsername($identity['user_id']);
 
         // Obtener los parámetros
-        $dateStart = $data->{"date.start"};
-        $dateEnd = $data->{"date.end"};
+        $dateStart = property_exists($data, 'date.start') ? $data->{"date.start"} : null;
+        $dateEnd = property_exists($data, 'date.end') ? $data->{"date.end"} : null;
 
         // Al menos un parámetro debe existir
         if (is_null($dateStart) && is_null($dateEnd)) {
@@ -92,6 +92,10 @@ class CoreCheckoutActivationLogRepository extends EntityRepository
 
         $currentTime = time();
 
+        // Colocar rangos que vienen nulos
+        $dateStart = is_null($dateStart) ? 0 : $dateStart;
+        $dateEnd = is_null($dateEnd) ? PHP_INT_MAX : $dateEnd;
+
         // Determinar si el canje será activado (dateStart enviado y fecha actual mayor o igual a fecha de canje)
         $enabled = !is_null($dateStart) && $currentTime >= $dateStart;
         $enabled = $enabled && (is_null($dateEnd) ? true : $currentTime < $dateEnd);
@@ -103,9 +107,6 @@ class CoreCheckoutActivationLogRepository extends EntityRepository
                 throw new \InvalidArgumentException('only_true');
             }
         } else {
-            // Validar rango de canje activo
-            $config = $this->_em->getRepository(CoreConfigs::class)->getCheckoutRange();
-
             return $this->insertLog($user, $dateStart, $dateEnd);
         }
     }
