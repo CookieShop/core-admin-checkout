@@ -30,21 +30,12 @@ class CoreCheckoutActivationLogRepository extends EntityRepository
 
         $checkoutIsActive = $rangeStart <= $currentTime && $currentTime <= $rangeEnd;
 
-        $result = $this->createQueryBuilder('B')
-            ->select("B.status as enabled,DATE_FORMAT(B.createdAt,'%d-%m-%Y" .
-                " %H:%i:%s') as version")
-            ->innerJoin('B.requestedBy', 'R')
-            ->orderBy('B.createdAt', 'DESC')
-            ->getQuery()->getResult();
-        if (isset($result[0])) {
-            $checkout = (array)$result[0];
-            $checkout['enabled'] = $checkoutIsActive;
-            $checkout['dateStart'] = $rangeStart;
-            $checkout['dateEnd'] = $rangeEnd;
-            return $checkout;
-        }
+        $checkout['version'] = '1';
+        $checkout['enabled'] = $checkoutIsActive;
+        $checkout['dateStart'] = $rangeStart;
+        $checkout['dateEnd'] = $rangeEnd;
 
-        throw new \InvalidArgumentException('Inicializar_canje');
+        return $checkout;
     }
 
     /**
