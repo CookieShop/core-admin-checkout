@@ -91,15 +91,7 @@ class CoreCheckoutActivationLogRepository extends EntityRepository
         $enabled = !is_null($dateStart) && $currentTime >= $dateStart;
         $enabled = $enabled && (is_null($dateEnd) ? true : $currentTime < $dateEnd);
 
-        if ($this->hasInit()) {
-            if ($enabled) {
-                return $this->insertLog($user, $dateStart, $dateEnd);
-            } else {
-                throw new \InvalidArgumentException('only_true');
-            }
-        } else {
-            return $this->insertLog($user, $dateStart, $dateEnd);
-        }
+        return $this->insertLog($user, $dateStart, $dateEnd);
     }
 
     /**
